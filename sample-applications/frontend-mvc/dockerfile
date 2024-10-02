@@ -12,7 +12,7 @@
 # HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 LABEL maintainer="somuj@amazon.com; ec2-windows-containers@amazon.com"
 
 WORKDIR /app
@@ -27,7 +27,7 @@ COPY ContainerMVC/. ./ContainerMVC/
 WORKDIR /app/ContainerMVC
 RUN dotnet publish -c Release -o out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/ContainerMVC/out ./
 USER "NT AUTHORITY\NETWORK SERVICE"
